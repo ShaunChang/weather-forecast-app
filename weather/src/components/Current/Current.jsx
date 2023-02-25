@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
+import { getCurrentWeather } from "../../service/weatherService";
 import styled from "styled-components";
+
 import jiguang from "./images/jiguang.jpg"
+import searchIcon from "./images/search.svg"
 import Date from "./components/Date/Date";
 import Location from "./components/Location/Location";
 import Environment from "./components/Environment/Environment";
 import Weather from "./components/Weather/Weather"
+
 
 
 const CurrentContainer = styled.div`
@@ -11,8 +16,9 @@ const CurrentContainer = styled.div`
     height: 40%;
     box-sizing: border-box;
     margin: 1rem auto;
-    padding-top: 2rem;
+    margin-top: 2rem;
     display: flex;
+    justify-content: center;
     border-radius: 12px;
     background-size: 100% 100%;
     background-image: url(${jiguang})
@@ -31,12 +37,14 @@ const LeftContainer = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    padding-top: 2rem;
 `
 
 const RightContainer = styled.div` 
     width: 50%;
     height: 100%;
     border-radius: 12px;
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -45,17 +53,87 @@ const RightContainer = styled.div`
     padding-right: 5rem;
 `
 
+const SearchContainer = styled.div`
+    position: absolute;
+    width: 20%;
+    height: 5%;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
+`
+const Search = styled.input`
+    width: 100%;
+    height: 100%;
+    border-radius: 999em;
+    background-color: rgba(246,246,246,0.8);
+    border: none;
+`
+const Img = styled.img`
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    margin-right: 1rem;
+`
+
 export default function Current(){
+    const [currentWeather,setCurrentWeather ] = useState({
+        location: '',
+        localitme: '',
+        temperature: '',
+        icon: '',
+        text:'',
+        wind_kph: '',
+        pm2_5: '',
+        humidity: '',
+        uv: '',
+    });
+    const [location,setLocation] = useState("beijing")
+    const [searchValue,setSearchValue] = useState("")
+    const [day, setDay] = useState(7)
+
+    useEffect(()=>{
+        getCurrentWeather(location,day).then(
+            (res)=>{
+                const weatherData = res.data;
+                console.log(weatherData)
+                setCurrentWeather({
+                    location: weatherData.location.name,
+                    localitme: weatherData.location.localtime,
+                    temperature: weatherData.current.temp_c,
+                    icon: weatherData.current.condition.icon,
+                    text: weatherData.current.condition.text,
+                    wind_kph: weatherData.current.wind_kph,
+                    pm2_5: weatherData.current.air_quality.pm2_5.toFixed(2),
+                    humidity:  weatherData.current.humidity,
+                    uv: weatherData.current.uv,
+                });
+            }
+        )
+    },[location,day])
+
+    const changeSearchValue = (e)=>{
+        setSearchValue(e.target.value)
+    }
+
+    const changeLocation = ()=>{
+        setLocation(searchValue)
+    }
+
     return(
     <CurrentContainer>
         <LeftContainer>
-            <Location/>
-            <Date/>
-            <Environment/>
+            <Location location={currentWeather.location}/>
+            <Date localitme={currentWeather.localitme}/>
+            <Environment pm2_5={currentWeather.pm2_5} humidity={currentWeather.humidity} uv={currentWeather.uv} wind_kph={currentWeather.wind_kph}/>
         </LeftContainer>
         <RightContainer>
-            <Weather/>
+            <Weather temperature={currentWeather.temperature} icon={currentWeather.icon} text={currentWeather.text}/>
         </RightContainer>
+        <SearchContainer>
+            <Search placeholder=" search location...." onChange={(e)=>{changeSearchValue(e)}}/>
+            <Img src={searchIcon} alt="search" onClick={changeLocation}/>
+        </SearchContainer>
     </CurrentContainer>
+
     )
 }

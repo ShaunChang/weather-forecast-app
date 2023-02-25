@@ -6,8 +6,8 @@ const LocationContainer = styled.div`
     color: white;
 `
 
-export default function Location (){
+export default function Location ({location}){
     return(
-        <LocationContainer>Shang Hai</LocationContainer>
+        <LocationContainer> {location} </LocationContainer>
     )
 }

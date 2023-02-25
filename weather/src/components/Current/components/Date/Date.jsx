@@ -5,8 +5,8 @@ const DateContainer = styled.div`
     color: white;
 `
 
-export default function Date(){
+export default function Date({localitme}){
     return(
-    <DateContainer>locate time: 01/21/2023 14:14</DateContainer>
+    <DateContainer>locate time: {localitme}</DateContainer>
     )
 }

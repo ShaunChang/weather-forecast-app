@@ -35,13 +35,13 @@ const TemperatureNumber = styled.span`
 `
 
 
-export default function Weather(){
+export default function Weather({temperature,icon}){
     return(
         <WeatherContainer>
             <IconContainer>
-                <Icon src={weather}/>
+                <Icon src={icon}/>
             </IconContainer>
-            <TemperatureContainer><TemperatureNumber>23</TemperatureNumber>°C</TemperatureContainer>
+            <TemperatureContainer><TemperatureNumber>{temperature}</TemperatureNumber>°C</TemperatureContainer>
         </WeatherContainer>
     )
 }

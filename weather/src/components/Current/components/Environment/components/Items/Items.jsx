@@ -25,20 +25,21 @@ const Image = styled.img`
 `
 
 const EnvironmentValueContainer = styled.div`
-    width: 70%;
+    width: 80%;
     height: 100%;
     color: black;
     display: flex;
-    justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    padding-left: 3px;
 `
 
 
-export default function Items (){
+export default function Items ({name,value}){
     return(
         <ItemsContainer>
             <ImageContainer><Image src={wind}/></ImageContainer>
-            <EnvironmentValueContainer>14km/h</EnvironmentValueContainer>
+            <EnvironmentValueContainer>{name}:{value}</EnvironmentValueContainer>
         </ItemsContainer>
     )
 }
