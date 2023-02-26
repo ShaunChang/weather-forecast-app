@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import weather from "./images/weather.svg"
 
 const WeatherContainer = styled.div`
-    width: 45%;
+    width: 30%;
     height: 80%;
     background: linear-gradient(167deg, rgba(121,126,205,1) 0%, rgba(89,96,198,1) 35%, rgba(55,49,154,1) 100%);
     border-radius: 10px;
@@ -15,7 +14,7 @@ const WeatherContainer = styled.div`
 const IconContainer = styled.div`
     margin-top: 1rem;
     width: 50%;
-    height: 65%;
+    height: 45%;
 `
 
 const Icon = styled.img`

@@ -1,10 +1,13 @@
+import { useContext } from "react"
+import {v4 as uuid} from "uuid";
 import styled from "styled-components"
 import Card from "./Card/Card"
+import { RootContext } from "../../../layouts"
 
-const TodayContainer = styled.div`
+const WeekContainer = styled.div`
     height: 100%; 
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(10,1fr);
     grid-gap: 1.5rem;
 
     // max-width: 1200px;
@@ -15,13 +18,13 @@ const TodayContainer = styled.div`
 `
 
 export default function Week (){
+    const {currentWeather}=useContext(RootContext)
+
     return(
-        <TodayContainer>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-        </TodayContainer>
+        <WeekContainer>
+        {
+            currentWeather.forecastArray.map((forecast) => <Card key={uuid()} date={forecast.date} icon={forecast.day.condition.icon} avTemp={forecast.day.avgtemp_c}/> )
+        }
+        </WeekContainer>
     )
 }

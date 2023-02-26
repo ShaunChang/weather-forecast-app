@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import {NavLink} from "react-router-dom"
+import {Link} from "react-router-dom"
+import NavStyle from "./Nav.module.css"
 
 const NavContainer = styled.div`
     width: 100%;
@@ -12,9 +13,9 @@ const NavContainer = styled.div`
 export default function Nav(){
     return(
         <NavContainer>
-            <NavLink className="navItemContainer" to="/today">today</NavLink>
+            <Link className={NavStyle.navItemContainer} to="/today">Today</Link>
             &nbsp;&nbsp;&nbsp;
-            <NavLink className="navItemContainer" to="/week">week</NavLink>
+            <Link className={NavStyle.navItemContainer} to="/week">Week</Link>
         </NavContainer>
     )
 }

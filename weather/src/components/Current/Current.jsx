@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { getCurrentWeather } from "../../service/weatherService";
 import styled from "styled-components";
+import { useContext } from "react";
 
 import jiguang from "./images/jiguang.jpg"
 import searchIcon from "./images/search.svg"
@@ -8,6 +7,7 @@ import Date from "./components/Date/Date";
 import Location from "./components/Location/Location";
 import Environment from "./components/Environment/Environment";
 import Weather from "./components/Weather/Weather"
+import { RootContext } from "../../layouts";
 
 
 
@@ -50,7 +50,6 @@ const RightContainer = styled.div`
     justify-content: space-evenly;
     align-items: center;
     box-sizing: border-box;
-    padding-right: 5rem;
 `
 
 const SearchContainer = styled.div`
@@ -76,48 +75,7 @@ const Img = styled.img`
 `
 
 export default function Current(){
-    const [currentWeather,setCurrentWeather ] = useState({
-        location: '',
-        localitme: '',
-        temperature: '',
-        icon: '',
-        text:'',
-        wind_kph: '',
-        pm2_5: '',
-        humidity: '',
-        uv: '',
-    });
-    const [location,setLocation] = useState("beijing")
-    const [searchValue,setSearchValue] = useState("")
-    const [day, setDay] = useState(7)
-
-    useEffect(()=>{
-        getCurrentWeather(location,day).then(
-            (res)=>{
-                const weatherData = res.data;
-                console.log(weatherData)
-                setCurrentWeather({
-                    location: weatherData.location.name,
-                    localitme: weatherData.location.localtime,
-                    temperature: weatherData.current.temp_c,
-                    icon: weatherData.current.condition.icon,
-                    text: weatherData.current.condition.text,
-                    wind_kph: weatherData.current.wind_kph,
-                    pm2_5: weatherData.current.air_quality.pm2_5.toFixed(2),
-                    humidity:  weatherData.current.humidity,
-                    uv: weatherData.current.uv,
-                });
-            }
-        )
-    },[location,day])
-
-    const changeSearchValue = (e)=>{
-        setSearchValue(e.target.value)
-    }
-
-    const changeLocation = ()=>{
-        setLocation(searchValue)
-    }
+    const {currentWeather,changeSearchValue,changeLocation} = useContext(RootContext)
 
     return(
     <CurrentContainer>

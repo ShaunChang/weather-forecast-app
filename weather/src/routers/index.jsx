@@ -9,7 +9,7 @@ const routes = [
         children: [
             {index: true, element: <Today/>},
             {path:'/week', element: <Week/>},
-            {path:'*', element: <Today/>}
+            {path:'*', element: <Today/>},
         ]
     }
 ]
